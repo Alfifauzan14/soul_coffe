@@ -48,7 +48,7 @@ function ProductCard({ product, index }: { product: (typeof products)[0]; index:
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.7, delay: index * 0.15, ease: "easeOut" }}
+      transition={{ duration: 0.7, delay: index * 0.15 }}
       className="group flex flex-col rounded-3xl overflow-hidden bg-soul-blue shadow-xl shadow-soul-blue/10 border border-white/5 hover:-translate-y-1 transition-all duration-300"
       id={`product-${product.id}`}
     >

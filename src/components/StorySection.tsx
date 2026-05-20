@@ -18,7 +18,7 @@ export default function StorySection() {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8 }}
             className="relative"
           >
             {/* Main Tall Image */}
@@ -63,7 +63,7 @@ export default function StorySection() {
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             <p className="text-soul-blue text-xs font-bold tracking-[0.2em] uppercase mb-4 flex items-center gap-4">
                <span className="w-8 h-px bg-soul-blue"></span>
@@ -80,7 +80,7 @@ export default function StorySection() {
             </h2>
 
             <p className="text-soul-blue/80 italic mb-8 text-sm md:text-base font-medium">
-              "Sebuah hidden gem yang menawarkan ketenangan sesungguhnya"
+              &quot;Sebuah hidden gem yang menawarkan ketenangan sesungguhnya&quot;
             </p>
 
             <div className="text-gray-600 leading-relaxed text-sm md:text-base mb-10 space-y-4">
