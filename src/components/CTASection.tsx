@@ -2,6 +2,9 @@
 
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 
 // Instagram icon — removed from lucide-react v0.511
 function InstagramIcon({ className }: { className?: string }) {
@@ -14,14 +17,29 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
-const WA_URL = "https://api.whatsapp.com/send?phone=6281224251104&fbclid=PAb21jcAR4w-NleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAae64Qm8EC0E0neY0zLwxwnrDKwNTaXjopH97dQ8Uhf7aijObOl41Rd4bqLUWA_aem_WomppjmZkSe0vLd1bF5q8g&utm_source=ig&utm_medium=social&utm_content=link_in_bio";
-const IG_URL = "https://www.instagram.com/soulco.id?igsh=OTYzNXgzenBncW5t";
-
 export default function CTASection() {
-  const waLink = `${WA_URL}&text=${encodeURIComponent(
+  const [waNumber, setWaNumber] = useState("6281224251104");
+  const [igLink, setIgLink] = useState("https://www.instagram.com/soulco.id");
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/settings`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.whatsapp_number) setWaNumber(data.whatsapp_number);
+          if (data.instagram_link) setIgLink(data.instagram_link);
+        }
+      } catch (err) {
+        console.error("Failed to fetch settings", err);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  const waLink = `https://api.whatsapp.com/send?phone=${waNumber}&text=${encodeURIComponent(
     "Halo Soul Coffee! Saya ingin mengetahui lebih lanjut tentang produk Anda"
   )}`;
-  const igLink = IG_URL;
 
   return (
     <section

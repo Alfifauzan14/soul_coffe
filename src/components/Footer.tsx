@@ -2,6 +2,9 @@
 
 import { motion } from "framer-motion";
 import { Coffee, MessageSquare, Mail } from "lucide-react";
+import { useState, useEffect } from "react";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 
 // Instagram icon — removed from lucide-react v0.511, using inline SVG
 function InstagramIcon({ className }: { className?: string }) {
@@ -22,29 +25,39 @@ const quickLinks = [
   { href: "#locations", label: "Kontak" },
 ];
 
-const WA_URL = "https://api.whatsapp.com/send?phone=6281224251104&fbclid=PAb21jcAR4w-NleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAae64Qm8EC0E0neY0zLwxwnrDKwNTaXjopH97dQ8Uhf7aijObOl41Rd4bqLUWA_aem_WomppjmZkSe0vLd1bF5q8g&utm_source=ig&utm_medium=social&utm_content=link_in_bio";
-const IG_URL = "https://www.instagram.com/soulco.id?igsh=OTYzNXgzenBncW5t";
-
-const supportLinks = [
-  { href: "mailto:hello@soulcoffee.id", label: "hello@soulcoffee.id" },
-  { href: WA_URL, label: "WhatsApp Business" },
-];
-
-const socials = [
-  {
-    href: IG_URL,
-    icon: InstagramIcon,
-    label: "Instagram",
-  },
-  {
-    href: WA_URL,
-    icon: MessageSquare,
-    label: "WhatsApp",
-  },
-  { href: "mailto:hello@soulcoffee.id", icon: Mail, label: "Email" },
-];
-
 export default function Footer() {
+  const [waUrl, setWaUrl] = useState("https://api.whatsapp.com/send?phone=6281224251104");
+  const [igUrl, setIgUrl] = useState("https://www.instagram.com/soulco.id");
+  const [email, setEmail] = useState("hello@soulcoffee.id");
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/settings`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.whatsapp_number) setWaUrl(`https://api.whatsapp.com/send?phone=${data.whatsapp_number}`);
+          if (data.instagram_link) setIgUrl(data.instagram_link);
+          if (data.email_address) setEmail(data.email_address);
+        }
+      } catch (err) {
+        console.error("Failed to fetch settings", err);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  const supportLinks = [
+    { href: `mailto:${email}`, label: email },
+    { href: waUrl, label: "WhatsApp Business" },
+  ];
+
+  const socials = [
+    { href: igUrl, icon: InstagramIcon, label: "Instagram" },
+    { href: waUrl, icon: MessageSquare, label: "WhatsApp" },
+    { href: `mailto:${email}`, icon: Mail, label: "Email" },
+  ];
+
   return (
     <footer
       className="bg-gray-950 text-white pt-16 pb-8 px-6"

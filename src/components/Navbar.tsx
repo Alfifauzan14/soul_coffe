@@ -17,7 +17,25 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isIdle, setIsIdle] = useState(false);
-  const waLink = "https://api.whatsapp.com/send?phone=6281224251104&text=Halo%20Soul%20Coffee!";
+  const [waLink, setWaLink] = useState("https://api.whatsapp.com/send?phone=6281224251104&text=Halo%20Soul%20Coffee!");
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
+        const res = await fetch(`${API_URL}/api/settings`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.whatsapp_number) {
+            setWaLink(`https://api.whatsapp.com/send?phone=${data.whatsapp_number}&text=Halo%20Soul%20Coffee!`);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch settings", err);
+      }
+    };
+    fetchSettings();
+  }, []);
 
   useEffect(() => {
     let idleTimeout: NodeJS.Timeout;
