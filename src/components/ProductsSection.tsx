@@ -38,7 +38,7 @@ function ProductCard({ product, index, waNumber }: { product: Product; index: nu
       id={`product-${product.id}`}
     >
       {/* Product image area */}
-      <div className="relative w-full aspect-square overflow-hidden bg-white">
+      <div className="relative w-full h-56 overflow-hidden bg-white">
         {/* Badge */}
         {product.badge && (
           <span
@@ -173,7 +173,7 @@ export default function ProductsSection() {
             <div className="w-10 h-10 border-4 border-soul-blue/30 border-t-soul-blue rounded-full animate-spin"></div>
           </div>
         ) : (
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-12 pt-4 px-4 -mx-4 hide-scrollbar">
+          <div className="flex items-start overflow-x-auto snap-x snap-mandatory gap-8 pb-12 pt-4 px-4 -mx-4 hide-scrollbar">
             {products.length > 0 ? (
               products.map((product, i) => (
                 <ProductCard key={product.id} product={product} index={i} waNumber={waNumber} />
