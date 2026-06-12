@@ -7,7 +7,9 @@ import { useState, useEffect } from "react";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 
 function formatPrice(price: string | number): string {
-  const num = typeof price === "string" ? parseFloat(price.replace(/[^0-9.]/g, "")) : price;
+  // Hapus semua karakter non-digit (titik & koma sebagai pemisah ribuan di format Indonesia)
+  const cleaned = typeof price === "string" ? price.replace(/[^0-9]/g, "") : String(price);
+  const num = parseInt(cleaned, 10);
   if (isNaN(num)) return String(price);
   return "Rp " + num.toLocaleString("id-ID");
 }
@@ -55,7 +57,7 @@ function ProductCard({ product, index, waNumber }: { product: Product; index: nu
                 : `${API_URL}${product.image_url}`
             }
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
