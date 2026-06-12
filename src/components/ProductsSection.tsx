@@ -38,7 +38,7 @@ function ProductCard({ product, index, waNumber }: { product: Product; index: nu
       id={`product-${product.id}`}
     >
       {/* Product image area */}
-      <div className="relative w-full h-56 overflow-hidden bg-white">
+      <div className="relative w-full aspect-square overflow-hidden bg-white">
         {/* Badge */}
         {product.badge && (
           <span
