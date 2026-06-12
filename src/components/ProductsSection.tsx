@@ -34,11 +34,11 @@ function ProductCard({ product, index, waNumber }: { product: Product; index: nu
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.7, delay: index * 0.15 }}
-      className="group flex flex-col rounded-3xl overflow-hidden bg-soul-blue shadow-xl shadow-soul-blue/10 border border-white/5 hover:-translate-y-1 transition-all duration-300 min-w-[85vw] md:min-w-[350px] snap-center shrink-0"
+      className="group flex flex-col rounded-3xl overflow-hidden bg-soul-blue shadow-xl shadow-soul-blue/10 border border-white/5 hover:-translate-y-1 transition-all duration-300 w-[260px] sm:w-[300px] md:w-[320px] snap-center shrink-0"
       id={`product-${product.id}`}
     >
       {/* Product image area */}
-      <div className="relative w-full aspect-square overflow-hidden bg-white">
+      <div className="relative w-full h-[220px] overflow-hidden bg-white flex-shrink-0">
         {/* Badge */}
         {product.badge && (
           <span
