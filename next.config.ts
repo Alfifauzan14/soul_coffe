@@ -6,7 +6,24 @@ const nextConfig: NextConfig = {
     root: path.resolve(__dirname, "../.."),
   },
   images: {
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "5001",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "**",
+        pathname: "/**",
+      },
+    ],
   },
 };
 

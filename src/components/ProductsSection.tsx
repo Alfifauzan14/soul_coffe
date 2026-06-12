@@ -1,11 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { MessageCircle, Package } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
+
+function formatPrice(price: string | number): string {
+  const num = typeof price === "string" ? parseFloat(price.replace(/[^0-9.]/g, "")) : price;
+  if (isNaN(num)) return String(price);
+  return "Rp " + num.toLocaleString("id-ID");
+}
 
 interface Product {
   id: string;
@@ -42,12 +47,15 @@ function ProductCard({ product, index, waNumber }: { product: Product; index: nu
         )}
 
         {product.image_url ? (
-          <Image
-            src={product.image_url}
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={
+              product.image_url.startsWith("http")
+                ? product.image_url
+                : `${API_URL}${product.image_url}`
+            }
             alt={product.name}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 33vw"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
@@ -75,7 +83,7 @@ function ProductCard({ product, index, waNumber }: { product: Product; index: nu
         </p>
 
         <div className="flex items-center justify-between">
-          <span className="text-amber-400 font-bold text-lg tracking-wide">{product.price}</span>
+          <span className="text-amber-400 font-bold text-lg tracking-wide">{formatPrice(product.price)}</span>
           
           <a
             href={waLink}
